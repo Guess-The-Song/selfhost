@@ -17,8 +17,10 @@ services:
     restart: unless-stopped
     ports:
       - '5001:80'
-    volumes:
-      - ./env:/env
+    environment:
+      - CLIENT_ID=YOURSPOTIFYCLIENTIDHERE
+      - REDIRECT_URI=https://YOURFRONTENDURL/auth
+      - SERVER_URL=YOURSERVERURL
   # Guess The Song Backend
   #app:
   #  image: 'thaemisch/gts-server:latest'
