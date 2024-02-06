@@ -13,20 +13,24 @@ services:
       - ./letsencrypt:/etc/letsencrypt
   # Guess The Song Frontend
   client:
-    image: 'thaemisch/gts-client:x86_64'           # IF YOU ARE ON ARM ARCHITECTURE, CHANGE TO :arm
+    image: 'thaemisch/gts-client:${ENV_ARCH}'
     restart: unless-stopped
     ports:
       - '5001:3000'
     environment:
-      - CLIENT_ID=YOURSPOTIFYCLIENTIDHERE          # CHANGE THIS #
-      - REDIRECT_URI=https://example.com/auth      # CHANGE THIS # PATH MUST STAY '/auth'
-      - SERVER_URL=https://server.example.com      # CHANGE THIS #
+      - CLIENT_ID=${ENV_CLIENT_ID}
+      - REDIRECT_URI=${ENV_REDIRECT_URI}
+      - SERVER_URL=${ENV_SERVER_URL}
   # Guess The Song Backend
-  #server:
-  #  image: 'thaemisch/gts-server:latest'
-  #  restart: unless-stopped
-  #  ports:
-  #    - '5002:3000'
-  #    - '5003:8080'
-  #  volumes:
-  #    - ./env:/env
+  server:
+    image: 'thaemisch/gts-server:${ENV_ARCH}'
+    restart: unless-stopped
+    ports:
+      - '5002:3000'
+      - '5003:8080'
+    environment:
+      - CLIENT_ID=${ENV_CLIENT_ID}
+      - CLIENT_SECRET=${ENV_CLIENT_SECRET}
+      - REDIRECT_URI=${ENV_REDIRECT_URI}
+    volumes:
+      - ./database:/app/server/db
