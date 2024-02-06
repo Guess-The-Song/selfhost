@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   # Ngninx Proxy Manager for routing, exposing, https certificates, access controll.
-  app:
+  npm:
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
     ports:
@@ -12,7 +12,7 @@ services:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
   # Guess The Song Frontend
-  app:
+  frontend:
     image: 'thaemisch/gts-client:latest'
     restart: unless-stopped
     ports:
@@ -22,7 +22,7 @@ services:
       - REDIRECT_URI=https://YOURFRONTENDURL/auth
       - SERVER_URL=YOURSERVERURL
   # Guess The Song Backend
-  #app:
+  #backend:
   #  image: 'thaemisch/gts-server:latest'
   #  restart: unless-stopped
   #  ports:
