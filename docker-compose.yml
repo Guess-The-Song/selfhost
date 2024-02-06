@@ -13,14 +13,14 @@ services:
       - ./letsencrypt:/etc/letsencrypt
   # Guess The Song Frontend
   frontend:
-    image: 'thaemisch/gts-client:latest'
+    image: 'thaemisch/gts-client:x86_64'           # IF YOU ARE ON ARM ARCHITECTURE, CHANGE TO :arm
     restart: unless-stopped
     ports:
       - '5001:80'
     environment:
-      - CLIENT_ID=YOURSPOTIFYCLIENTIDHERE
-      - REDIRECT_URI=https://YOURFRONTENDURL/auth
-      - SERVER_URL=YOURSERVERURL
+      - CLIENT_ID=YOURSPOTIFYCLIENTIDHERE          # CHANGE THIS #
+      - REDIRECT_URI=https://example.com/auth      # CHANGE THIS # PATH MUST STAY '/auth'
+      - SERVER_URL=https://server.example.com      # CHANGE THIS #
   # Guess The Song Backend
   #backend:
   #  image: 'thaemisch/gts-server:latest'
