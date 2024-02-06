@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  # Ngninx Proxy Manager for routing, exposing, https certificates, access controll.
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+  # Guess The Song Frontend
+  app:
+    image: 'thaemisch/gts-client:latest'
+    restart: unless-stopped
+    ports:
+      - '5001:80'
+    volumes:
+      - ./env:/env
+  # Guess The Song Backend
+  #app:
+  #  image: 'thaemisch/gts-server:latest'
+  #  restart: unless-stopped
+  #  ports:
+  #    - '5002:3000'
+  #    - '5003:8080'
+  #  volumes:
+  #    - ./env:/env
